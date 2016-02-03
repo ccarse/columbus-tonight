@@ -1,13 +1,13 @@
 var cheerio = require('cheerio')
-var request = require('request')
 var moment = require('moment')
+var childProcess = require('child_process')
 
 var url = 'http://www.yoshis.com/calendar/'
 var shows = []
 
 module.exports = function(done) {
-  request(url, function(err, response, body) {
-    var $ = cheerio.load(body)
+ /* childProcess.exec('curl --socks5 201.175.76.107:10000 '+url, function(err, stdout, stderr) {
+    var $ = cheerio.load(stdout)
     $('.data.vevent').each(function(){
       var date = $(this).find('.value-title').attr('title').split('T')[0]
       $(this).find('.one-event').each(function(){
@@ -23,7 +23,7 @@ module.exports = function(done) {
         shows.push(show)
       })
     })
-
+*/
     done(null, shows)
-  })
+// })
 }
