@@ -1,21 +1,24 @@
 {
-  "name": "oakland-tonight",
+  "name": "columbus-tonight",
   "version": "1.0.0",
-  "description": "oakland venue scraper",
-  "repository": "https://github.com/morganherlocker/oakland-tonight/",
-  "main": "index.js",
+  "description": "Columbus venue scraper",
+  "repository": "https://github.com/ccarse/columbus-tonight/",
+  "main": "index.ts",
   "scripts": {
     "lint": "prettier --write ./*.js ./sources/*.js",
-    "build": "node index.js",
-    "dry": "DRY=1 node index.js"
+    "build": "ts-node index.ts",
+    "dry": "DRY=1 ts-node index.ts"
   },
-  "author": "morganherlocker",
+  "author": "ccarse",
   "license": "MIT",
   "dependencies": {
+    "@types/node": "^12.7.2",
     "cheerio": "^0.22.0",
     "d3-queue": "^3.0.7",
     "moment": "^2.10.6",
     "prettier": "^1.16.1",
-    "request": "^2.65.0"
+    "request": "^2.65.0",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
   }
 }

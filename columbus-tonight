@@ -4,6 +4,6 @@
 
 set -e
 
-node ~/oakland-tonight/index.js
+node ~/columbus-tonight/index.js
 
 exit 0

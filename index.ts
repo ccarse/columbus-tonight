@@ -55,7 +55,7 @@ fs.readdir(__dirname + "/sources", function(err, dirs) {
       )
         venueHash[show.venue].soon.push(show);
     });
-    venues = Object.keys(venueHash).map(function(key) {
+    const venues = Object.keys(venueHash).map(function(key) {
       return venueHash[key];
     });
 
