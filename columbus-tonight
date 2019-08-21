@@ -1,9 +1,0 @@
-#!/bin/sh
-#
-# oakland-tonight cron daily
-
-set -e
-
-node ~/columbus-tonight/index.js
-
-exit 0
