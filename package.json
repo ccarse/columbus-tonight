@@ -3,20 +3,25 @@
   "version": "1.0.0",
   "description": "Columbus venue scraper",
   "repository": "https://github.com/ccarse/columbus-tonight/",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "scripts": {
-    "lint": "prettier --write ./*.js ./sources/*.js",
-    "build": "ts-node index.ts",
-    "dry": "DRY=1 ts-node index.ts"
+    "lint": "eslint *.ts",
+    "build": "ts-node src/index.ts"
   },
   "author": "ccarse",
   "license": "MIT",
   "dependencies": {
     "@types/node": "^12.7.2",
+    "@types/puppeteer": "^1.19.1",
+    "@typescript-eslint/eslint-plugin": "^2.0.0",
+    "@typescript-eslint/parser": "^2.0.0",
     "cheerio": "^0.22.0",
-    "d3-queue": "^3.0.7",
+    "eslint": "^6.2.1",
+    "eslint-config-prettier": "^6.1.0",
+    "eslint-plugin-prettier": "^3.1.0",
     "moment": "^2.10.6",
     "prettier": "^1.16.1",
+    "puppeteer": "^1.19.0",
     "request": "^2.65.0",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.3"
