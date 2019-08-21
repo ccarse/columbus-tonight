@@ -2,7 +2,7 @@ import puppeteer from 'puppeteer';
 
 const url = 'https://ohioexpocenter.com/events/list/';
 
-const process = async (page: puppeteer.Page) => {
+const scrape = async (page: puppeteer.Page) => {
   try {
     await page.goto(url, { waitUntil: 'networkidle2' });
     const events = await page.evaluate(`[...document.querySelectorAll('.tribe-events-list-event-title')].map(x => x.innerText)`);
@@ -26,4 +26,4 @@ const process = async (page: puppeteer.Page) => {
   }
 };
 
-export default process;
+export default scrape;
