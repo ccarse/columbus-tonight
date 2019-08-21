@@ -1,0 +1,4 @@
+[Wed Aug 21 2019 15:28:28 GMT-0400 (Eastern Daylight Time)] [info] fetching sources
+[Wed Aug 21 2019 15:28:33 GMT-0400 (Eastern Daylight Time)] [info] found 10 total shows
+[Wed Aug 21 2019 15:28:33 GMT-0400 (Eastern Daylight Time)] [info] wrote page
+[Wed Aug 21 2019 15:28:33 GMT-0400 (Eastern Daylight Time)] [info] pushed to github

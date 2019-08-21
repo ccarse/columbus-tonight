@@ -36,7 +36,7 @@ interface Venue {
     generatePage(venues);
     log('info', 'wrote page');
 
-    childProcess.exec(`cd ${__dirname};git add .; git commit -m "refresh"; git push origin gh-pages;`, function() {
+    childProcess.exec(`cd ${__dirname};git add .; git commit -m "refresh"; git push origin master;`, function() {
       log('info', 'pushed to github');
     });
   });
@@ -46,7 +46,7 @@ function generatePage(venues: Venue[]) {
   const html = generateHtml(venues);
   let template = fs.readFileSync(`${__dirname}/template.html`, 'utf8');
   template = template.split('{{content}}').join(html);
-  fs.writeFileSync(`${__dirname}/index.html`, template);
+  fs.writeFileSync(`${__dirname}/../docs/index.html`, template);
 }
 
 async function pullFromSources(sourceFileNames: string[], browser: puppeteer.Browser) {
