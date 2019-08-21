@@ -2,6 +2,7 @@ import fs from 'fs';
 import childProcess from 'child_process';
 import moment from 'moment';
 import puppeteer from 'puppeteer';
+import { log } from './log';
 
 interface Event {
   venue: string;
@@ -26,7 +27,7 @@ interface Venue {
   const browser = await puppeteer.launch();
 
   await fs.readdir(`${__dirname}/sources`, async function(err, sourceFileNames) {
-    let events: Event[] = await pullFromSources(sourceFileNames, browser);
+    const events: Event[] = await pullFromSources(sourceFileNames, browser);
     sortByDate(events);
     log('info', `found ${events.length} total shows`);
 
@@ -42,7 +43,7 @@ interface Venue {
 })();
 
 function generatePage(venues: Venue[]) {
-  let html = generateHtml(venues);
+  const html = generateHtml(venues);
   let template = fs.readFileSync(`${__dirname}/template.html`, 'utf8');
   template = template.split('{{content}}').join(html);
   fs.writeFileSync(`${__dirname}/index.html`, template);
@@ -52,7 +53,7 @@ async function pullFromSources(sourceFileNames: string[], browser: puppeteer.Bro
   const eventLists = await scrapeSources(sourceFileNames, browser);
   let events: Event[] = [];
   eventLists &&
-    eventLists.forEach(function (eventList) {
+    eventLists.forEach(function(eventList) {
       events = events.concat(eventList);
     });
   return events;
@@ -69,8 +70,8 @@ async function scrapeSources(sourceFileNames: string[], browser: puppeteer.Brows
 
   async function scrapeSource(sourceFileName: string) {
     const page = await browser.newPage();
-    const fn = require(`${__dirname}/sources/${sourceFileName}`);
-    queue.push(fn.default(page));
+    const src = require(`${__dirname}/sources/${sourceFileName}`);
+    queue.push(src.default(page));
   }
 }
 
@@ -82,7 +83,7 @@ function processIntoVenues(events: Event[]) {
   const venueHash: {
     [s: string]: Venue;
   } = {};
-  events.forEach(function (event) {
+  events.forEach(function(event) {
     if (!venueHash[event.venue])
       venueHash[event.venue] = {
         venue: event.venue,
@@ -90,12 +91,10 @@ function processIntoVenues(events: Event[]) {
         tonight: [],
         soon: [],
       };
-    if (event.date === todayText)
-      venueHash[event.venue].tonight.push(event);
-    else if (event.date > todayText && event.date <= oneWeekFromToday)
-      venueHash[event.venue].soon.push(event);
+    if (event.date === todayText) venueHash[event.venue].tonight.push(event);
+    else if (event.date > todayText && event.date <= oneWeekFromToday) venueHash[event.venue].soon.push(event);
   });
-  const venues = Object.keys(venueHash).map(function (key) {
+  const venues = Object.keys(venueHash).map(function(key) {
     return venueHash[key];
   });
   return venues;
@@ -105,21 +104,17 @@ function GetTodaysDateText() {
   const today = new Date();
   const year = today.getFullYear().toString();
   let month = (today.getMonth() + 1).toString();
-  if (month.length === 1)
-    month = `0${month}`;
+  if (month.length === 1) month = `0${month}`;
   let day = today.getDate().toString();
-  if (day.length === 1)
-    day = `0${day}`;
+  if (day.length === 1) day = `0${day}`;
   const todayText = `${year}-${month}-${day}`;
   return todayText;
 }
 
 function sortByDate(events: Event[]) {
-  events.sort(function (a, b) {
-    if (a.date > b.date)
-      return 1;
-    else
-      return -1;
+  events.sort(function(a, b) {
+    if (a.date > b.date) return 1;
+    else return -1;
   });
 }
 
@@ -128,18 +123,14 @@ function generateHtml(venues: Venue[]) {
   html += '<span class="date">' + moment().format('M/D') + '</span>';
   html += '</div>';
   html += '<div id="tonight">';
-  venues.forEach(function (venue) {
-    if (venue.tonight.length > 0)
-      html += '<h3><a class="venue-link" href="' + venue.venueURL + '">' + venue.venue + '</a></h3>';
-    venue.tonight.forEach(function (event: Event, i) {
-      if (i > 0)
-        html += '<hr>';
+  venues.forEach(function(venue) {
+    if (venue.tonight.length > 0) html += '<h3><a class="venue-link" href="' + venue.venueURL + '">' + venue.venue + '</a></h3>';
+    venue.tonight.forEach(function(event: Event, i) {
+      if (i > 0) html += '<hr>';
       html += '<div class="show">';
       html += '<h4><a class="show-link" href="' + event.url + '">' + event.title + '</a></h4>';
-      if (event.time)
-        html += '<div class="info">' + event.time + '</div>';
-      if (event.price)
-        html += '<div class="info">' + event.price + '</div>';
+      if (event.time) html += '<div class="info">' + event.time + '</div>';
+      if (event.price) html += '<div class="info">' + event.price + '</div>';
       html += '</div>';
     });
   });
@@ -157,26 +148,18 @@ function generateHtml(venues: Venue[]) {
     '</span>';
   html += '</div>';
   html += '<div id="soon">';
-  venues.forEach(function (venue) {
-    if (venue.soon.length > 0)
-      html += '<h3><a class="venue-link" href="' + venue.venueURL + '">' + venue.venue + '</a></h3>';
-    venue.soon.forEach(function (event, i) {
-      if (i > 0)
-        html += '<hr>';
+  venues.forEach(function(venue) {
+    if (venue.soon.length > 0) html += '<h3><a class="venue-link" href="' + venue.venueURL + '">' + venue.venue + '</a></h3>';
+    venue.soon.forEach(function(event, i) {
+      if (i > 0) html += '<hr>';
       html += '<div class="show">';
       html += '<h4><a class="show-link" href="' + event.url + '">' + event.title + '</a></h4>';
       html += '<div class="info">' + event.date.split('-')[1] + '/' + event.date.split('-')[2] + '/' + event.date.split('-')[0] + '</div>';
       html += '<div class="info">' + event.time + '</div>';
-      if (event.price)
-        html += '<div class="info">' + event.price + '</div>';
+      if (event.price) html += '<div class="info">' + event.price + '</div>';
       html += '</div>';
     });
   });
   html += '</div>';
   return html;
-}
-
-function log(level: any, msg: any) {
-  process.stderr.write('[' + new Date() + '] ' + '[' + level + '] ' + msg + '\n');
-  fs.appendFileSync(__dirname + '/log.txt', '[' + new Date() + '] ' + '[' + level + '] ' + msg + '\n');
 }

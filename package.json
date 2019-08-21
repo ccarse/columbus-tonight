@@ -5,7 +5,7 @@
   "repository": "https://github.com/ccarse/columbus-tonight/",
   "main": "src/index.ts",
   "scripts": {
-    "lint": "eslint *.ts",
+    "lint": "eslint src/**.ts --fix",
     "build": "ts-node src/index.ts"
   },
   "author": "ccarse",
