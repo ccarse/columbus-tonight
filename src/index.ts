@@ -4,14 +4,14 @@ import moment from 'moment';
 import puppeteer from 'puppeteer';
 import { log } from './log';
 
-interface Event {
+export interface Event {
   venue: string;
   venueURL: string;
   title: string;
   url: string;
   date: string; //YYYY-MM-DD
-  time: string;
-  price: number;
+  time?: string | null;
+  price?: number | null;
 }
 
 interface Venue {
@@ -77,8 +77,8 @@ async function scrapeSources(sourceFileNames: string[], browser: puppeteer.Brows
 
 function processIntoVenues(events: Event[]) {
   const todayText = GetTodaysDateText();
-  const oneWeekFromToday = moment(todayText)
-    .add(8, 'days')
+  const oneMonthFromToday = moment(todayText)
+    .add(1, 'months')
     .format('YYYY-MM-DD');
   const venueHash: {
     [s: string]: Venue;
@@ -92,7 +92,7 @@ function processIntoVenues(events: Event[]) {
         soon: [],
       };
     if (event.date === todayText) venueHash[event.venue].tonight.push(event);
-    else if (event.date > todayText && event.date <= oneWeekFromToday) venueHash[event.venue].soon.push(event);
+    else if (event.date > todayText && event.date <= oneMonthFromToday) venueHash[event.venue].soon.push(event);
   });
   const venues = Object.keys(venueHash).map(function(key) {
     return venueHash[key];
@@ -135,7 +135,7 @@ function generateHtml(venues: Venue[]) {
     });
   });
   html += '</div>';
-  html += '<div class="navhead">NEXT WEEK';
+  html += '<div class="navhead">NEXT MONTH';
   html +=
     '<span class="date">' +
     moment()
@@ -143,7 +143,7 @@ function generateHtml(venues: Venue[]) {
       .format('M/D') +
     '-' +
     moment()
-      .add(8, 'days')
+      .add(1, 'months')
       .format('M/D') +
     '</span>';
   html += '</div>';
@@ -155,7 +155,7 @@ function generateHtml(venues: Venue[]) {
       html += '<div class="show">';
       html += '<h4><a class="show-link" href="' + event.url + '">' + event.title + '</a></h4>';
       html += '<div class="info">' + event.date.split('-')[1] + '/' + event.date.split('-')[2] + '/' + event.date.split('-')[0] + '</div>';
-      html += '<div class="info">' + event.time + '</div>';
+      if (event.time) html += '<div class="info">' + event.time + '</div>';
       if (event.price) html += '<div class="info">' + event.price + '</div>';
       html += '</div>';
     });

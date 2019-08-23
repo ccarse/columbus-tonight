@@ -11,11 +11,13 @@
   "author": "ccarse",
   "license": "MIT",
   "dependencies": {
+    "@types/datejs": "0.0.30",
     "@types/node": "^12.7.2",
     "@types/puppeteer": "^1.19.1",
     "@typescript-eslint/eslint-plugin": "^2.0.0",
     "@typescript-eslint/parser": "^2.0.0",
     "cheerio": "^0.22.0",
+    "datejs": "^1.0.0-rc3",
     "eslint": "^6.2.1",
     "eslint-config-prettier": "^6.1.0",
     "eslint-plugin-prettier": "^3.1.0",
