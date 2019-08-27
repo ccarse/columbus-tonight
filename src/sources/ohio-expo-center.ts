@@ -28,7 +28,7 @@ const scrape = async (page: puppeteer.Page) => {
         } catch (error) {
           console.log(error);
         }
-        return (event && event.date && event.title) ? null : event;
+        return (event && event.dateStr && event.title) ? event : null;
       });
     `);
     console.log(`Returning ${events.length} events`);

@@ -23,14 +23,16 @@ interface Venue {
 (async () => {
   log('info', 'fetching sources');
 
-  const browser = await puppeteer.launch({args: [
-    // Required for Docker version of Puppeteer
-    '--no-sandbox',
-    '--disable-setuid-sandbox',
-    // This will write shared memory files into /tmp instead of /dev/shm,
-    // because Docker’s default for /dev/shm is 64MB
-    '--disable-dev-shm-usage'
-  ]});
+  const browser = await puppeteer.launch({
+    args: [
+      // Required for Docker version of Puppeteer
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      // This will write shared memory files into /tmp instead of /dev/shm,
+      // because Docker’s default for /dev/shm is 64MB
+      '--disable-dev-shm-usage',
+    ],
+  });
 
   await fs.readdir(`${__dirname}/sources`, async function(err, sourceFileNames) {
     const events: Event[] = await pullFromSources(sourceFileNames, browser);
@@ -134,16 +136,6 @@ function generateHtml(venues: Venue[]) {
   });
   html += '</div>';
   html += '<div class="navhead">UPCOMING';
-  // html +=
-  //   '<span class="date">' +
-  //   moment()
-  //     .add(1, 'day')
-  //     .format('M/D') +
-  //   '-' +
-  //   moment()
-  //     .add(2, 'months')
-  //     .format('M/D') +
-  //   '</span>';
   html += '</div>';
   html += '<div id="soon">';
   venues.forEach(function(venue) {

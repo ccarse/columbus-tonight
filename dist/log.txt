@@ -56,3 +56,18 @@
 [Mon Aug 26 2019 13:59:37 GMT-0400 (Eastern Daylight Time)] [info] fetching sources
 [Mon Aug 26 2019 13:59:46 GMT-0400 (Eastern Daylight Time)] [info] found 40 total shows
 [Mon Aug 26 2019 13:59:46 GMT-0400 (Eastern Daylight Time)] [info] wrote page
+[Mon Aug 26 2019 21:32:21 GMT-0400 (Eastern Daylight Time)] [info] fetching sources
+[Mon Aug 26 2019 21:32:28 GMT-0400 (Eastern Daylight Time)] [info] found 45 total shows
+[Mon Aug 26 2019 21:32:28 GMT-0400 (Eastern Daylight Time)] [info] wrote page
+[Mon Aug 26 2019 21:34:31 GMT-0400 (Eastern Daylight Time)] [info] fetching sources
+[Mon Aug 26 2019 21:34:37 GMT-0400 (Eastern Daylight Time)] [info] found 45 total shows
+[Mon Aug 26 2019 21:34:37 GMT-0400 (Eastern Daylight Time)] [info] wrote page
+[Mon Aug 26 2019 21:36:43 GMT-0400 (Eastern Daylight Time)] [info] fetching sources
+[Mon Aug 26 2019 21:36:49 GMT-0400 (Eastern Daylight Time)] [info] found 45 total shows
+[Mon Aug 26 2019 21:36:49 GMT-0400 (Eastern Daylight Time)] [info] wrote page
+[Mon Aug 26 2019 21:38:16 GMT-0400 (Eastern Daylight Time)] [info] fetching sources
+[Mon Aug 26 2019 21:38:21 GMT-0400 (Eastern Daylight Time)] [info] found 45 total shows
+[Mon Aug 26 2019 21:38:21 GMT-0400 (Eastern Daylight Time)] [info] wrote page
+[Mon Aug 26 2019 21:38:59 GMT-0400 (Eastern Daylight Time)] [info] fetching sources
+[Mon Aug 26 2019 21:39:06 GMT-0400 (Eastern Daylight Time)] [info] found 68 total shows
+[Mon Aug 26 2019 21:39:06 GMT-0400 (Eastern Daylight Time)] [info] wrote page

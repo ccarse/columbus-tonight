@@ -3,7 +3,7 @@ import { Event } from '../index';
 import moment from 'moment';
 import 'datejs';
 
-const url = 'https://www.capa.com/venues/detail/palace-theatre';
+const url = 'https://www.capa.com/venues/detail/ohio-theatre';
 
 const scrape = async (page: puppeteer.Page) => {
   try {
@@ -13,11 +13,11 @@ const scrape = async (page: puppeteer.Page) => {
         let event;
         try {
           event = {
-            venue: 'Palace Theatre',
-            venueURL: 'https://www.capa.com/venues/detail/palace-theatre',
+            venue: 'Ohio Theatre',
+            venueURL: 'https://www.capa.com/venues/detail/ohio-theatre',
             title: evt.querySelector('.info .title').innerText,
             url: evt.querySelector('.thumb a').href,
-            dateStr: evt.querySelector('.date .m-date__singleDate') && evt.querySelector('.date .m-date__singleDate').innerText,
+            dateStr: evt.querySelector('.date') && evt.querySelector('.date').innerText.split('–')[0],
             time: null,
             price: null
           };
