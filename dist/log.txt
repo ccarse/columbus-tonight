@@ -50,3 +50,9 @@
 [Thu Aug 22 2019 21:37:39 GMT-0400 (Eastern Daylight Time)] [info] found 10 total shows
 [Thu Aug 22 2019 21:37:39 GMT-0400 (Eastern Daylight Time)] [info] wrote page
 [Thu Aug 22 2019 21:37:39 GMT-0400 (Eastern Daylight Time)] [info] pushed to github
+[Mon Aug 26 2019 13:56:41 GMT-0400 (Eastern Daylight Time)] [info] fetching sources
+[Mon Aug 26 2019 13:56:58 GMT-0400 (Eastern Daylight Time)] [info] found 10 total shows
+[Mon Aug 26 2019 13:56:58 GMT-0400 (Eastern Daylight Time)] [info] wrote page
+[Mon Aug 26 2019 13:59:37 GMT-0400 (Eastern Daylight Time)] [info] fetching sources
+[Mon Aug 26 2019 13:59:46 GMT-0400 (Eastern Daylight Time)] [info] found 40 total shows
+[Mon Aug 26 2019 13:59:46 GMT-0400 (Eastern Daylight Time)] [info] wrote page

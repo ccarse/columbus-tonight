@@ -1,5 +1,4 @@
 import fs from 'fs';
-import childProcess from 'child_process';
 import moment from 'moment';
 import puppeteer from 'puppeteer';
 import { log } from './log';
@@ -24,7 +23,14 @@ interface Venue {
 (async () => {
   log('info', 'fetching sources');
 
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({args: [
+    // Required for Docker version of Puppeteer
+    '--no-sandbox',
+    '--disable-setuid-sandbox',
+    // This will write shared memory files into /tmp instead of /dev/shm,
+    // because Docker’s default for /dev/shm is 64MB
+    '--disable-dev-shm-usage'
+  ]});
 
   await fs.readdir(`${__dirname}/sources`, async function(err, sourceFileNames) {
     const events: Event[] = await pullFromSources(sourceFileNames, browser);
@@ -35,10 +41,6 @@ interface Venue {
 
     generatePage(venues);
     log('info', 'wrote page');
-
-    childProcess.exec(`cd ${__dirname};git add .; git commit -m "refresh"; git push origin master;`, function() {
-      log('info', 'pushed to github');
-    });
   });
 })();
 
@@ -46,7 +48,7 @@ function generatePage(venues: Venue[]) {
   const html = generateHtml(venues);
   let template = fs.readFileSync(`${__dirname}/template.html`, 'utf8');
   template = template.split('{{content}}').join(html);
-  fs.writeFileSync(`${__dirname}/../docs/index.html`, template);
+  fs.writeFileSync(`${__dirname}/../dist/index.html`, template);
 }
 
 async function pullFromSources(sourceFileNames: string[], browser: puppeteer.Browser) {
@@ -62,23 +64,19 @@ async function pullFromSources(sourceFileNames: string[], browser: puppeteer.Bro
 async function scrapeSources(sourceFileNames: string[], browser: puppeteer.Browser) {
   const queue: Promise<Event[]>[] = [];
   for (const fileName of sourceFileNames) {
-    await scrapeSource(fileName);
+    const page = await browser.newPage();
+    const src = require(`${__dirname}/sources/${fileName}`);
+    queue.push(src.default(page));
   }
   const eventLists = await Promise.all(queue);
   await browser.close();
   return eventLists;
-
-  async function scrapeSource(sourceFileName: string) {
-    const page = await browser.newPage();
-    const src = require(`${__dirname}/sources/${sourceFileName}`);
-    queue.push(src.default(page));
-  }
 }
 
 function processIntoVenues(events: Event[]) {
   const todayText = GetTodaysDateText();
-  const oneMonthFromToday = moment(todayText)
-    .add(1, 'months')
+  const twoMonthsFromToday = moment(todayText)
+    .add(2, 'months')
     .format('YYYY-MM-DD');
   const venueHash: {
     [s: string]: Venue;
@@ -92,7 +90,7 @@ function processIntoVenues(events: Event[]) {
         soon: [],
       };
     if (event.date === todayText) venueHash[event.venue].tonight.push(event);
-    else if (event.date > todayText && event.date <= oneMonthFromToday) venueHash[event.venue].soon.push(event);
+    else if (event.date > todayText && event.date <= twoMonthsFromToday) venueHash[event.venue].soon.push(event);
   });
   const venues = Object.keys(venueHash).map(function(key) {
     return venueHash[key];
@@ -135,17 +133,17 @@ function generateHtml(venues: Venue[]) {
     });
   });
   html += '</div>';
-  html += '<div class="navhead">NEXT MONTH';
-  html +=
-    '<span class="date">' +
-    moment()
-      .add(1, 'day')
-      .format('M/D') +
-    '-' +
-    moment()
-      .add(1, 'months')
-      .format('M/D') +
-    '</span>';
+  html += '<div class="navhead">UPCOMING';
+  // html +=
+  //   '<span class="date">' +
+  //   moment()
+  //     .add(1, 'day')
+  //     .format('M/D') +
+  //   '-' +
+  //   moment()
+  //     .add(2, 'months')
+  //     .format('M/D') +
+  //   '</span>';
   html += '</div>';
   html += '<div id="soon">';
   venues.forEach(function(venue) {

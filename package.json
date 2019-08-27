@@ -16,7 +16,6 @@
     "@types/puppeteer": "^1.19.1",
     "@typescript-eslint/eslint-plugin": "^2.0.0",
     "@typescript-eslint/parser": "^2.0.0",
-    "cheerio": "^0.22.0",
     "datejs": "^1.0.0-rc3",
     "eslint": "^6.2.1",
     "eslint-config-prettier": "^6.1.0",
@@ -24,7 +23,6 @@
     "moment": "^2.10.6",
     "prettier": "^1.16.1",
     "puppeteer": "^1.19.0",
-    "request": "^2.65.0",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.3"
   }

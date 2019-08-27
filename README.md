@@ -1,5 +1,5 @@
-# oakland-tonight
-A nightly event aggregator for Oakland, CA
+# columbus-tonight
+A nightly event aggregator for Columbus, CA
 
 ##install
 
